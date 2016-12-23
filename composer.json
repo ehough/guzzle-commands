@@ -22,7 +22,7 @@
     "require": {
         "php": ">=5.3.29",
         "ehough/generators": "~1.0",
-        "ehough/guzzle": "dev-develop",
+        "ehough/guzzle": "^6.2",
         "ehough/promises": "~1.3",
         "ehough/psr7": "~1.0"
     },
@@ -33,11 +33,5 @@
         "psr-4": {
             "Hough\\Guzzle\\Command\\": "src/"
         }
-    },
-    "repositories": [
-        {
-            "type" : "path",
-            "url" : "../guzzle"
-        }
-    ]
+    }
 }
