@@ -8,7 +8,7 @@ namespace Hough\Guzzle\Command;
  * The methods in the class are primarily for implementing the ArrayAccess,
  * Countable, and IteratorAggregate interfaces.
  */
-trait HasDataTrait
+class HasData
 {
     /** @var array Data stored in the collection. */
     protected $data;

@@ -67,7 +67,7 @@ class ServiceClient implements ServiceClientInterface
         return $this->handlerStack;
     }
 
-    public function getCommand($name, array $params = [])
+    public function getCommand($name, array $params = array())
     {
         return new Command($name, $params, clone $this->handlerStack);
     }
@@ -85,10 +85,10 @@ class ServiceClient implements ServiceClientInterface
         return $handler($command);
     }
 
-    public function executeAll($commands, array $options = [])
+    public function executeAll($commands, array $options = array())
     {
         // Modify provided callbacks to track results.
-        $results = [];
+        $results = array();
         $options['fulfilled'] = function ($v, $k) use (&$results, $options) {
             if (isset($options['fulfilled'])) {
                 $options['fulfilled']($v, $k);
@@ -111,7 +111,7 @@ class ServiceClient implements ServiceClientInterface
             ->wait();
     }
 
-    public function executeAllAsync($commands, array $options = [])
+    public function executeAllAsync($commands, array $options = array())
     {
         // Apply default concurrency.
         if (!isset($options['concurrency'])) {
@@ -124,7 +124,7 @@ class ServiceClient implements ServiceClientInterface
             foreach ($commands as $key => $command) {
                 if (!$command instanceof CommandInterface) {
                     throw new \InvalidArgumentException('The iterator must '
-                        . 'yield instances of ' . CommandInterface::class);
+                        . 'yield instances of \Hough\Guzzle\Command\CommandInterface');
                 }
                 yield $key => $this->executeAsync($command);
             }
@@ -145,7 +145,7 @@ class ServiceClient implements ServiceClientInterface
      */
     public function __call($name, array $args)
     {
-        $args = isset($args[0]) ? $args[0] : [];
+        $args = isset($args[0]) ? $args[0] : array();
         if (substr($name, -5) === 'Async') {
             $command = $this->getCommand(substr($name, 0, -5), $args);
             return $this->executeAsync($command);
@@ -164,7 +164,7 @@ class ServiceClient implements ServiceClientInterface
         return function (CommandInterface $command) {
             return Promise\coroutine(function () use ($command) {
                 // Prepare the HTTP options.
-                $opts = $command['@http'] ?: [];
+                $opts = $command['@http'] ?: array();
                 unset($command['@http']);
 
                 try {

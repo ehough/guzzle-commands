@@ -4,14 +4,12 @@ namespace Hough\Guzzle\Command;
 /**
  * Default command implementation.
  */
-class Result implements ResultInterface
+class Result extends HasData implements ResultInterface
 {
-    use HasDataTrait;
-
     /**
      * @param array $data
      */
-    public function __construct(array $data = [])
+    public function __construct(array $data = array())
     {
         $this->data = $data;
     }

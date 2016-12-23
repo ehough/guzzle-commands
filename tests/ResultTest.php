@@ -5,15 +5,15 @@ use Hough\Guzzle\Command\Result;
 
 /**
  * @covers \Hough\Guzzle\Command\Result
- * @covers \Hough\Guzzle\Command\HasDataTrait
+ * @covers \Hough\Guzzle\Command\HasData
  */
 class ResultTest extends \PHPUnit_Framework_TestCase
 {
     public function testHasData()
     {
-        $c = new Result(['baz' => 'bar']);
+        $c = new Result(array('baz' => 'bar'));
         $this->assertSame('bar', $c['baz']);
-        $this->assertSame(['baz' => 'bar'], $c->toArray());
+        $this->assertSame(array('baz' => 'bar'), $c->toArray());
         $this->assertTrue(isset($c['baz']));
         $c['fizz'] = 'buzz';
         $this->assertCount(2, $c);

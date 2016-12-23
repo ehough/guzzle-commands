@@ -41,12 +41,12 @@ class CommandException extends \RuntimeException implements GuzzleException
         }
 
         // Throw a more specific exception for 4XX or 5XX responses.
-        $class = self::class;
+        $class = get_called_class();
         $statusCode = $response ? $response->getStatusCode() : 0;
         if ($statusCode >= 400 && $statusCode < 500) {
-            $class = CommandClientException::class;
+            $class = '\Hough\Guzzle\Command\Exception\CommandClientException';
         } elseif ($statusCode >= 500 && $statusCode < 600) {
-            $class = CommandServerException::class;
+            $class = '\Hough\Guzzle\Command\Exception\CommandServerException';
         }
 
         // Prepare the message.

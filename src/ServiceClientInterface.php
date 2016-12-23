@@ -24,7 +24,7 @@ interface ServiceClientInterface
      * @return CommandInterface
      * @throws \InvalidArgumentException if no command can be found by name
      */
-    public function getCommand($name, array $args = []);
+    public function getCommand($name, array $args = array());
 
     /**
      * Execute a single command.
@@ -58,7 +58,7 @@ interface ServiceClientInterface
      * @return array
      * @see Hough\Guzzle\Command\ServiceClientInterface::createPool for options.
      */
-    public function executeAll($commands, array $options = []);
+    public function executeAll($commands, array $options = array());
 
     /**
      * Executes multiple commands concurrently and asynchronously using a
@@ -74,7 +74,7 @@ interface ServiceClientInterface
      * @return PromiseInterface
      * @see Hough\Guzzle\Command\ServiceClientInterface::createPool for options.
      */
-    public function executeAllAsync($commands, array $options = []);
+    public function executeAllAsync($commands, array $options = array());
 
     /**
      * Get the HTTP client used to send requests for the web service client

@@ -23,13 +23,13 @@ class ServiceClientTest extends \PHPUnit_Framework_TestCase
     private function getServiceClient(array $responses)
     {
         return new ServiceClient(
-            new HttpClient([
+            new HttpClient(array(
                 'handler' => new MockHandler($responses)
-            ]),
+            )),
             function (CommandInterface $command) {
                 $data = $command->toArray();
                 $data['action'] = $command->getName();
-                return new Request('POST', '/', [], http_build_query($data));
+                return new Request('POST', '/', array(), http_build_query($data));
             },
             function (ResponseInterface $response, RequestInterface $request) {
                 $data = json_decode($response->getBody(), true);
@@ -51,34 +51,34 @@ class ServiceClientTest extends \PHPUnit_Framework_TestCase
 
     public function testExecuteCommandViaMagicMethod()
     {
-        $client = $this->getServiceClient([
-            new Response(200, [], '{"foo":"bar"}'),
-            new Response(200, [], '{"foofoo":"barbar"}'),
-        ]);
+        $client = $this->getServiceClient(array(
+            new Response(200, array(), '{"foo":"bar"}'),
+            new Response(200, array(), '{"foofoo":"barbar"}'),
+        ));
 
         // Synchronous
-        $result1 = $client->doThatThingYouDo(['fizz' => 'buzz']);
+        $result1 = $client->doThatThingYouDo(array('fizz' => 'buzz'));
         $this->assertEquals('bar', $result1['foo']);
         $this->assertEquals('buzz', $result1['_request']['fizz']);
         $this->assertEquals('doThatThingYouDo', $result1['_request']['action']);
 
         // Asynchronous
-        $result2 = $client->doThatThingOtherYouDoAsync(['fizz' => 'buzz'])->wait();
+        $result2 = $client->doThatThingOtherYouDoAsync(array('fizz' => 'buzz'))->wait();
         $this->assertEquals('barbar', $result2['foofoo']);
         $this->assertEquals('doThatThingOtherYouDo', $result2['_request']['action']);
     }
 
     public function testCommandExceptionIsThrownWhenAnErrorOccurs()
     {
-        $client = $this->getServiceClient([
+        $client = $this->getServiceClient(array(
             new BadResponseException(
                 'Bad Response',
-                $this->getMockForAbstractClass(RequestInterface::class),
-                $this->getMockForAbstractClass(ResponseInterface::class)
+                $this->getMockForAbstractClass('\Psr\Http\Message\RequestInterface'),
+                $this->getMockForAbstractClass('\Psr\Http\Message\ResponseInterface')
             ),
-        ]);
+        ));
 
-        $this->setExpectedException(CommandException::class);
+        $this->setExpectedException('\Hough\Guzzle\Command\Exception\CommandException');
         $client->execute($client->getCommand('foo'));
     }
 
@@ -86,34 +86,34 @@ class ServiceClientTest extends \PHPUnit_Framework_TestCase
     {
         // Set up commands to execute concurrently.
         $generateCommands = function () {
-            yield new Command('capitalize', ['letter' => 'a']);
-            yield new Command('capitalize', ['letter' => '2']);
-            yield new Command('capitalize', ['letter' => 'z']);
+            yield new Command('capitalize', array('letter' => 'a'));
+            yield new Command('capitalize', array('letter' => '2'));
+            yield new Command('capitalize', array('letter' => 'z'));
         };
 
         // Setup a client with mock responses for the commands.
         // Note: the second one will be a failed request.
-        $client = $this->getServiceClient([
-            new Response(200, [], '{"letter":"A"}'),
+        $client = $this->getServiceClient(array(
+            new Response(200, array(), '{"letter":"A"}'),
             new BadResponseException(
                 'Bad Response',
-                $this->getMockForAbstractClass(RequestInterface::class),
-                new Response(200, [], '{"error":"Not a letter"}')
+                $this->getMockForAbstractClass('\Psr\Http\Message\RequestInterface'),
+                new Response(200, array(), '{"error":"Not a letter"}')
             ),
-            new Response(200, [], '{"letter":"Z"}'),
-        ]);
+            new Response(200, array(), '{"letter":"Z"}'),
+        ));
 
         // Setup fulfilled/rejected callbacks, just to confirm they are called.
         $fulfilledFnCalled = false;
         $rejectedFnCalled = false;
-        $options = [
+        $options = array(
             'fulfilled' => function () use (&$fulfilledFnCalled) {
                 $fulfilledFnCalled = true;
             },
             'rejected' => function () use (&$rejectedFnCalled) {
                 $rejectedFnCalled = true;
             },
-        ];
+        );
 
         // Execute multiple commands.
         $results = $client->executeAll($generateCommands(), $options);
@@ -124,14 +124,14 @@ class ServiceClientTest extends \PHPUnit_Framework_TestCase
 
         // Validate that the results are as expected.
         $this->assertCount(3, $results);
-        $this->assertInstanceOf(Result::class, $results[0]);
+        $this->assertInstanceOf('\Hough\Guzzle\Command\Result', $results[0]);
         $this->assertEquals('A', $results[0]['letter']);
-        $this->assertInstanceOf(CommandException::class, $results[1]);
+        $this->assertInstanceOf('\Hough\Guzzle\Command\Exception\CommandException', $results[1]);
         $this->assertContains(
             'Not a letter',
             (string) $results[1]->getResponse()->getBody()
         );
-        $this->assertInstanceOf(Result::class, $results[2]);
+        $this->assertInstanceOf('\Hough\Guzzle\Command\Result', $results[2]);
         $this->assertEquals('Z', $results[2]['letter']);
     }
 
@@ -141,9 +141,9 @@ class ServiceClientTest extends \PHPUnit_Framework_TestCase
             yield 'foo';
         };
 
-        $this->setExpectedException(\InvalidArgumentException::class);
+        $this->setExpectedException('\InvalidArgumentException');
 
-        $client = $this->getServiceClient([]);
+        $client = $this->getServiceClient(array());
         $client->executeAll($generateCommands());
     }
 }

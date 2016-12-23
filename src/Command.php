@@ -6,10 +6,8 @@ use Hough\Guzzle\HandlerStack;
 /**
  * Default command implementation.
  */
-class Command implements CommandInterface
+class Command extends HasData implements CommandInterface
 {
-    use HasDataTrait;
-
     /** @var string */
     private $name;
 
@@ -23,7 +21,7 @@ class Command implements CommandInterface
      */
     public function __construct(
         $name,
-        array $args = [],
+        array $args = array(),
         HandlerStack $handlerStack = null
     ) {
         $this->name = $name;

@@ -16,9 +16,9 @@ class CommandExceptionTest extends \PHPUnit_Framework_TestCase
 {
     public function testCanGetDataFromException()
     {
-        $command = $this->getMockForAbstractClass(CommandInterface::class);
-        $request = $this->getMockForAbstractClass(RequestInterface::class);
-        $response = $this->getMockForAbstractClass(ResponseInterface::class);
+        $command = $this->getMockForAbstractClass('\Hough\Guzzle\Command\CommandInterface');
+        $request = $this->getMockForAbstractClass('\Psr\Http\Message\RequestInterface');
+        $response = $this->getMockForAbstractClass('\Psr\Http\Message\ResponseInterface');
 
         $exception = new CommandException('error', $command, null, $request, $response);
         $this->assertSame($command, $exception->getCommand());
@@ -28,7 +28,7 @@ class CommandExceptionTest extends \PHPUnit_Framework_TestCase
 
     public function testFactoryReturnsExceptionIfAlreadyCommandException()
     {
-        $command = $this->getMockForAbstractClass(CommandInterface::class);
+        $command = $this->getMockForAbstractClass('\Hough\Guzzle\Command\CommandInterface');
         $previous = CommandException::fromPrevious($command, new \Exception);
 
         $exception = CommandException::fromPrevious($command, $previous);
@@ -37,25 +37,25 @@ class CommandExceptionTest extends \PHPUnit_Framework_TestCase
 
     public function testFactoryReturnsClientExceptionFor400LevelStatusCode()
     {
-        $command = $this->getMockForAbstractClass(CommandInterface::class);
-        $request = $this->getMockForAbstractClass(RequestInterface::class);
-        $response = $this->getMockForAbstractClass(ResponseInterface::class);
+        $command = $this->getMockForAbstractClass('\Hough\Guzzle\Command\CommandInterface');
+        $request = $this->getMockForAbstractClass('\Psr\Http\Message\RequestInterface');
+        $response = $this->getMockForAbstractClass('\Psr\Http\Message\ResponseInterface');
         $response->method('getStatusCode')->willReturn(404);
         $previous = new RequestException('error', $request, $response);
 
         $exception = CommandException::fromPrevious($command, $previous);
-        $this->assertInstanceOf(CommandClientException::class, $exception);
+        $this->assertInstanceOf('\Hough\Guzzle\Command\Exception\CommandClientException', $exception);
     }
 
     public function testFactoryReturnsServerExceptionFor500LevelStatusCode()
     {
-        $command = $this->getMockForAbstractClass(CommandInterface::class);
-        $request = $this->getMockForAbstractClass(RequestInterface::class);
-        $response = $this->getMockForAbstractClass(ResponseInterface::class);
+        $command = $this->getMockForAbstractClass('\Hough\Guzzle\Command\CommandInterface');
+        $request = $this->getMockForAbstractClass('\Psr\Http\Message\RequestInterface');
+        $response = $this->getMockForAbstractClass('\Psr\Http\Message\ResponseInterface');
         $response->method('getStatusCode')->willReturn(500);
         $previous = new RequestException('error', $request, $response);
 
         $exception = CommandException::fromPrevious($command, $previous);
-        $this->assertInstanceOf(CommandServerException::class, $exception);
+        $this->assertInstanceOf('\Hough\Guzzle\Command\Exception\CommandServerException', $exception);
     }
 }
