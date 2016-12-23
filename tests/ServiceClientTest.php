@@ -138,9 +138,9 @@ class ServiceClientTest extends \PHPUnit_Framework_TestCase
 
     public function testMultipleCommandsFailsForNonCommands()
     {
-        $generateCommands = function () {
-            yield 'foo';
-        };
+        $generateCommands = new ArrayGenerator(array(
+            'foo'
+        ));
 
         $this->setExpectedException('\InvalidArgumentException');
 
