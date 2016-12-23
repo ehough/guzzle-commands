@@ -46,8 +46,8 @@ class ServiceClient implements ServiceClientInterface
      */
     public function __construct(
         HttpClient $httpClient,
-        callable $commandToRequestTransformer,
-        callable $responseToResultTransformer,
+        $commandToRequestTransformer,
+        $responseToResultTransformer,
         HandlerStack $commandHandlerStack = null
     ) {
         $this->httpClient = $httpClient;
