@@ -1,5 +1,5 @@
 <?php
-namespace GuzzleHttp\Command;
+namespace Hough\Guzzle\Command;
 
 /**
  * Default command implementation.

@@ -1,9 +1,9 @@
 <?php
-namespace GuzzleHttp\Command\Exception;
+namespace Hough\Guzzle\Command\Exception;
 
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Command\CommandInterface;
+use Hough\Guzzle\Exception\GuzzleException;
+use Hough\Guzzle\Exception\RequestException;
+use Hough\Guzzle\Command\CommandInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 

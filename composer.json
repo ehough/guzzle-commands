@@ -1,6 +1,6 @@
 {
-    "name": "guzzlehttp/command",
-    "description": "Provides the foundation for building command-based web service clients",
+    "name": "ehough/guzzle-commands",
+    "description": "PHP 5.3-compatible fork of guzzle/command",
     "license": "MIT",
     "authors": [
         {
@@ -12,25 +12,32 @@
             "name": "Jeremy Lindblom",
             "email": "jeremeamia@gmail.com",
             "homepage": "https://github.com/jeremeamia"
+        },
+        {
+            "name": "Eric Hough",
+            "email": "eric@tubepress.com",
+            "homepage": "https://github.com/ehough"
         }
     ],
     "require": {
-        "php": ">=5.5.0",
-        "guzzlehttp/guzzle": "^6.2",
-        "guzzlehttp/promises": "~1.3",
-        "guzzlehttp/psr7": "~1.0"
+        "php": ">=5.3.29",
+        "ehough/generators": "~1.0",
+        "ehough/guzzle": "dev-develop",
+        "ehough/promises": "~1.3",
+        "ehough/psr7": "~1.0"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.0|~5.0"
     },
     "autoload": {
         "psr-4": {
-            "GuzzleHttp\\Command\\": "src/"
+            "Hough\\Guzzle\\Command\\": "src/"
         }
     },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "0.9-dev"
+    "repositories": [
+        {
+            "type" : "path",
+            "url" : "../guzzle"
         }
-    }
+    ]
 }

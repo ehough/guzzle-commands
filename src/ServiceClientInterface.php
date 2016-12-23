@@ -1,10 +1,10 @@
 <?php
-namespace GuzzleHttp\Command;
+namespace Hough\Guzzle\Command;
 
-use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Command\Exception\CommandException;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Promise\PromiseInterface;
+use Hough\Guzzle\ClientInterface;
+use Hough\Guzzle\Command\Exception\CommandException;
+use Hough\Guzzle\HandlerStack;
+use Hough\Promise\PromiseInterface;
 
 /**
  * Web service client interface.
@@ -56,7 +56,7 @@ interface ServiceClientInterface
      *     - rejected: (callable) Function to invoke when a command fails.
      *
      * @return array
-     * @see GuzzleHttp\Command\ServiceClientInterface::createPool for options.
+     * @see Hough\Guzzle\Command\ServiceClientInterface::createPool for options.
      */
     public function executeAll($commands, array $options = []);
 
@@ -72,7 +72,7 @@ interface ServiceClientInterface
      *     - rejected: (callable) Function to invoke when a command fails.
      *
      * @return PromiseInterface
-     * @see GuzzleHttp\Command\ServiceClientInterface::createPool for options.
+     * @see Hough\Guzzle\Command\ServiceClientInterface::createPool for options.
      */
     public function executeAllAsync($commands, array $options = []);
 

@@ -1,11 +1,11 @@
 <?php
-namespace GuzzleHttp\Command;
+namespace Hough\Guzzle\Command;
 
-use GuzzleHttp\ClientInterface as HttpClient;
-use GuzzleHttp\Command\Exception\CommandException;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Promise;
-use GuzzleHttp\Promise\PromiseInterface;
+use Hough\Guzzle\ClientInterface as HttpClient;
+use Hough\Guzzle\Command\Exception\CommandException;
+use Hough\Guzzle\HandlerStack;
+use Hough\Promise;
+use Hough\Promise\PromiseInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -34,13 +34,13 @@ class ServiceClient implements ServiceClientInterface
      *     will be used to perform the underlying HTTP requests.
      * @param callable $commandToRequestTransformer A callable that transforms
      *     a Command into a Request. The function should accept a
-     *     `GuzzleHttp\Command\CommandInterface` object and return a
+     *     `Hough\Guzzle\Command\CommandInterface` object and return a
      *     `Psr\Http\Message\RequestInterface` object.
      * @param callable $responseToResultTransformer A callable that transforms a
      *     Response into a Result. The function should accept a
      *     `Psr\Http\Message\ResponseInterface` object (and optionally a
      *     `Psr\Http\Message\RequestInterface` object) and return a
-     *     `GuzzleHttp\Command\ResultInterface` object.
+     *     `Hough\Guzzle\Command\ResultInterface` object.
      * @param HandlerStack $commandHandlerStack A Guzzle HandlerStack, which can
      *     be used to add command-level middleware to the service client.
      */
@@ -141,7 +141,7 @@ class ServiceClient implements ServiceClientInterface
      * @param array $args Arguments to pass to the getCommand method.
      *
      * @return ResultInterface|PromiseInterface
-     * @see \GuzzleHttp\Command\ServiceClientInterface::getCommand
+     * @see \Hough\Guzzle\Command\ServiceClientInterface::getCommand
      */
     public function __call($name, array $args)
     {

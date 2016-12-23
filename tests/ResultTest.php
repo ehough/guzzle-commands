@@ -1,11 +1,11 @@
 <?php
-namespace GuzzleHttp\Tests\Command;
+namespace Hough\Guzzle\Tests\Command;
 
-use GuzzleHttp\Command\Result;
+use Hough\Guzzle\Command\Result;
 
 /**
- * @covers \GuzzleHttp\Command\Result
- * @covers \GuzzleHttp\Command\HasDataTrait
+ * @covers \Hough\Guzzle\Command\Result
+ * @covers \Hough\Guzzle\Command\HasDataTrait
  */
 class ResultTest extends \PHPUnit_Framework_TestCase
 {

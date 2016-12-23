@@ -1,7 +1,7 @@
 <?php
-namespace GuzzleHttp\Command;
+namespace Hough\Guzzle\Command;
 
-use GuzzleHttp\HandlerStack;
+use Hough\Guzzle\HandlerStack;
 
 /**
  * A command object encapsulates the input parameters used to control the

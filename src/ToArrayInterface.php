@@ -1,6 +1,6 @@
 <?php
 
-namespace GuzzleHttp\Command;
+namespace Hough\Guzzle\Command;
 
 /**
  * An object that can be represented as an array

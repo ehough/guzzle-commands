@@ -1,16 +1,16 @@
 <?php
-namespace GuzzleHttp\Tests\Command\CommandException;
+namespace Hough\Guzzle\Tests\Command\CommandException;
 
-use GuzzleHttp\Command\CommandInterface;
-use GuzzleHttp\Command\Exception\CommandClientException;
-use GuzzleHttp\Command\Exception\CommandException;
-use GuzzleHttp\Command\Exception\CommandServerException;
-use GuzzleHttp\Exception\RequestException;
+use Hough\Guzzle\Command\CommandInterface;
+use Hough\Guzzle\Command\Exception\CommandClientException;
+use Hough\Guzzle\Command\Exception\CommandException;
+use Hough\Guzzle\Command\Exception\CommandServerException;
+use Hough\Guzzle\Exception\RequestException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * @covers \GuzzleHttp\Command\Exception\CommandException
+ * @covers \Hough\Guzzle\Command\Exception\CommandException
  */
 class CommandExceptionTest extends \PHPUnit_Framework_TestCase
 {

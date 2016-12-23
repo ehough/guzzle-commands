@@ -1,22 +1,22 @@
 <?php
-namespace GuzzleHttp\Tests\Command\Guzzle;
+namespace Hough\Guzzle\Tests\Command\Guzzle;
 
-use GuzzleHttp\Client as HttpClient;
-use GuzzleHttp\Command\Command;
-use GuzzleHttp\Command\CommandInterface;
-use GuzzleHttp\Command\Exception\CommandException;
-use GuzzleHttp\Command\Result;
-use GuzzleHttp\Command\ServiceClient;
-use GuzzleHttp\Exception\BadResponseException;
-use GuzzleHttp\Handler\MockHandler;
-use GuzzleHttp\HandlerStack;
-use GuzzleHttp\Psr7\Response;
+use Hough\Guzzle\Client as HttpClient;
+use Hough\Guzzle\Command\Command;
+use Hough\Guzzle\Command\CommandInterface;
+use Hough\Guzzle\Command\Exception\CommandException;
+use Hough\Guzzle\Command\Result;
+use Hough\Guzzle\Command\ServiceClient;
+use Hough\Guzzle\Exception\BadResponseException;
+use Hough\Guzzle\Handler\MockHandler;
+use Hough\Guzzle\HandlerStack;
+use Hough\Psr7\Response;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use GuzzleHttp\Psr7\Request;
+use Hough\Psr7\Request;
 
 /**
- * @covers \GuzzleHttp\Command\ServiceClient
+ * @covers \Hough\Guzzle\Command\ServiceClient
  */
 class ServiceClientTest extends \PHPUnit_Framework_TestCase
 {

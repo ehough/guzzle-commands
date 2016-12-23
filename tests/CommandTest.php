@@ -1,11 +1,11 @@
 <?php
-namespace GuzzleHttp\Tests\Command;
+namespace Hough\Guzzle\Tests\Command;
 
-use GuzzleHttp\Command\Command;
-use GuzzleHttp\HandlerStack;
+use Hough\Guzzle\Command\Command;
+use Hough\Guzzle\HandlerStack;
 
 /**
- * @covers \GuzzleHttp\Command\Command
+ * @covers \Hough\Guzzle\Command\Command
  */
 class CommandTest extends \PHPUnit_Framework_TestCase
 {

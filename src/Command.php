@@ -1,7 +1,7 @@
 <?php
-namespace GuzzleHttp\Command;
+namespace Hough\Guzzle\Command;
 
-use GuzzleHttp\HandlerStack;
+use Hough\Guzzle\HandlerStack;
 
 /**
  * Default command implementation.

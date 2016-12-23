@@ -1,6 +1,6 @@
 <?php
 
-namespace GuzzleHttp\Command;
+namespace Hough\Guzzle\Command;
 
 /**
  * Basic collection behavior for Command and Result objects.
