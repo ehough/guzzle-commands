@@ -1,6 +1,7 @@
 <?php
 namespace Hough\Guzzle\Tests\Command\Guzzle;
 
+use Hough\Generators\ArrayGenerator;
 use Hough\Guzzle\Client as HttpClient;
 use Hough\Guzzle\Command\Command;
 use Hough\Guzzle\Command\CommandInterface;
@@ -85,11 +86,11 @@ class ServiceClientTest extends \PHPUnit_Framework_TestCase
     public function testExecuteMultipleCommands()
     {
         // Set up commands to execute concurrently.
-        $generateCommands = function () {
-            yield new Command('capitalize', array('letter' => 'a'));
-            yield new Command('capitalize', array('letter' => '2'));
-            yield new Command('capitalize', array('letter' => 'z'));
-        };
+        $generateCommands = new ArrayGenerator(array(
+            new Command('capitalize', array('letter' => 'a')),
+            new Command('capitalize', array('letter' => '2')),
+            new Command('capitalize', array('letter' => 'z')),
+        ));
 
         // Setup a client with mock responses for the commands.
         // Note: the second one will be a failed request.
