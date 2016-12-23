@@ -1,15 +1,24 @@
-# Guzzle Commands
+# ehough/guzzle-commands
 
-[![License](https://poser.pugx.org/guzzlehttp/command/license)](https://packagist.org/packages/guzzlehttp/command)
-[![Build Status](https://travis-ci.org/guzzle/command.svg?branch=master)](https://travis-ci.org/guzzle/command) 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/guzzle/command/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/guzzle/command/?branch=master) 
-[![Code Coverage](https://scrutinizer-ci.com/g/guzzle/command/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/guzzle/command/?branch=master) 
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/7a93338e-50cd-42f7-9299-17c44d92148f/mini.png)](https://insight.sensiolabs.com/projects/7a93338e-50cd-42f7-9299-17c44d92148f)
-[![Latest Stable Version](https://poser.pugx.org/guzzlehttp/command/v/stable)](https://packagist.org/packages/guzzlehttp/command)
-[![Latest Unstable Version](https://poser.pugx.org/guzzlehttp/command/v/unstable)](https://packagist.org/packages/guzzlehttp/command)
-[![Total Downloads](https://poser.pugx.org/guzzlehttp/command/downloads)](https://packagist.org/packages/guzzlehttp/command)
+[![Build Status](https://travis-ci.org/ehough/guzzle-commands.svg?branch=develop)](https://travis-ci.org/ehough/guzzle-commands)
+[![Latest Stable Version](https://poser.pugx.org/ehough/guzzle-commands/v/stable)](https://packagist.org/packages/ehough/guzzle-commands)
+[![License](https://poser.pugx.org/ehough/guzzle-commands/license)](https://packagist.org/packages/ehough/guzzle-commands)
 
-This library uses Guzzle (``guzzlehttp/guzzle``, version 6.x) and provides the
+
+A PHP 5.3-compatible fork of [Guzzle Commands](https://github.com/guzzle/command).
+
+# Why?
+
+Sadly, [60%](https://w3techs.com/technologies/details/pl-php/5/all) of all PHP web servers still run PHP 5.4 and lower, but Guzzle Commands needs PHP 5.5 or higher. This fork makes Guzzle Commands compatible with PHP 5.3.29 through 7.1.
+
+# How to Use This Fork
+
+Usage is identical to [`guzzle/command`](https://github.com/guzzle/command), except that the code in this library is 
+namespaced under `Hough\Guzzle\Command` instead of `GuzzleHttp\Command`.
+
+--- 
+
+This library uses Guzzle (``ehough/guzzle``, version 6.x) and provides the
 foundations to create fully-featured web service clients by abstracting Guzzle
 HTTP **requests** and **responses** into higher-level **commands** and
 **results**. A **middleware** system, analogous to — but separate from — the one
@@ -24,31 +33,15 @@ Key-value pair objects representing an operation of a web service. Commands have
 
 Key-value pair objects representing the processed result of executing an operation of a web service.
 
-## Installing
-
-This project can be installed using Composer:
-
-``composer require guzzlehttp/command``
-
-For **Guzzle 5**, use ``composer require guzzlehttp/command:0.8.*``. The source
-code for the Guzzle 5 version is available on the
-`0.8 branch <https://github.com/guzzle/command/tree/0.8>`_.
-
-**Note:** If Composer is not
-`installed globally <https://getcomposer.org/doc/00-intro.md#globally>`_,
-then you may need to run the preceding Composer commands using
-``php composer.phar`` (where ``composer.phar`` is the path to your copy of
-Composer), instead of just ``composer``.
-
 ## Service Clients
 
 Service Clients are web service clients that implement the
-``GuzzleHttp\Command\ServiceClientInterface`` and use an underlying Guzzle HTTP
+``Hough\Guzzle\Command\ServiceClientInterface`` and use an underlying Guzzle HTTP
 client (``GuzzleHttp\Client``) to communicate with the service. Service clients
-create and execute **commands** (``GuzzleHttp\Command\CommandInterface``),
+create and execute **commands** (``Hough\Guzzle\Command\CommandInterface``),
 which encapsulate operations within the web service, including the operation
 name and parameters. This library provides a generic implementation of a service
-client: the ``GuzzleHttp\Command\ServiceClient`` class.
+client: the ``Hough\Guzzle\Command\ServiceClient`` class.
 
 ## Instantiating a Service Client
 
@@ -76,7 +69,7 @@ method of the client.
 $result = $client->execute($command);
 ```
 
-The result of executing a command will be a ``GuzzleHttp\Command\ResultInterface``
+The result of executing a command will be a ``Hough\Guzzle\Command\ResultInterface``
 object. Result objects are ``ArrayAccess``-ible and contain the data parsed from
 HTTP response.
 

@@ -120,18 +120,11 @@ class ServiceClient implements ServiceClientInterface
 
         // Convert the iterator of commands to a generator of promises.
         $commands = Promise\iter_for($commands);
-        $promises = function () use ($commands) {
-            foreach ($commands as $key => $command) {
-                if (!$command instanceof CommandInterface) {
-                    throw new \InvalidArgumentException('The iterator must '
-                        . 'yield instances of \Hough\Guzzle\Command\CommandInterface');
-                }
-                yield $key => $this->executeAsync($command);
-            }
-        };
+        $promises = new AsyncExecutingGenerator($commands, array($this, 'executeAsync'));
 
         // Execute the commands using a pool.
-        return (new Promise\EachPromise($promises(), $options))->promise();
+        $eachPromise = new Promise\EachPromise($promises(), $options);
+        return $eachPromise->promise();
     }
 
     /**
@@ -161,34 +154,30 @@ class ServiceClient implements ServiceClientInterface
      */
     private function createCommandHandler()
     {
-        return function (CommandInterface $command) {
-            return Promise\coroutine(function () use ($command) {
-                // Prepare the HTTP options.
-                $opts = $command['@http'] ?: array();
-                unset($command['@http']);
+        $convertCommandToRequest = array($this, '__transformCommandToRequest');
+        $convertRequestToPromise = array($this->httpClient, 'sendAsync');
+        $convertResponseToResult = array($this, '__transformResponseToResult');
 
-                try {
-                    // Prepare the request from the command and send it.
-                    $request = $this->transformCommandToRequest($command);
-                    $promise = $this->httpClient->sendAsync($request, $opts);
+        return function (CommandInterface $command) use ($convertCommandToRequest, $convertRequestToPromise, $convertResponseToResult) {
 
-                    // Create a result from the response.
-                    $response = (yield $promise);
-                    yield $this->transformResponseToResult($response, $request, $command);
-                } catch (\Exception $e) {
-                    throw CommandException::fromPrevious($command, $e);
-                }
-            });
+            return Promise\coroutine(new CommandHandlingGenerator(
+                $command,
+                $convertCommandToRequest,
+                $convertRequestToPromise,
+                $convertResponseToResult
+            ));
         };
     }
 
     /**
      * Transforms a Command object into a Request object.
      *
+     * @internal
+     *
      * @param CommandInterface $command
      * @return RequestInterface
      */
-    private function transformCommandToRequest(CommandInterface $command)
+    public function __transformCommandToRequest(CommandInterface $command)
     {
         $transform = $this->commandToRequestTransformer;
 
@@ -205,7 +194,7 @@ class ServiceClient implements ServiceClientInterface
      * @param CommandInterface $command
      * @return ResultInterface
      */
-    private function transformResponseToResult(
+    public function __transformResponseToResult(
         ResponseInterface $response,
         RequestInterface $request,
         CommandInterface $command
